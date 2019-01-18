@@ -3,6 +3,7 @@ package com.wvs.quizza.controller;
 import com.wvs.quizza.assembler.QuestionResourceAssembler;
 import com.wvs.quizza.dto.Question;
 import com.wvs.quizza.repository.QuestionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @RestController
 public class QuestionController {
 
+    @Autowired
     private final QuestionRepository repository;
     private final QuestionResourceAssembler assembler;
 
@@ -23,7 +25,15 @@ public class QuestionController {
 
     @GetMapping("/question")
     public List<Question> getAllQuestion() {
+        repository.save(new Question(2L, "foo2Frage", "answer", "falsch", "falscher", "am falschesten"));
+
+        repository.save(new Question(3L, "fooFrage", "answer", "falsch", "falscher", "am falschesten"));
         return repository.findAll();
+    }
+
+    @GetMapping("/question/{id}")
+    public Question getQuestion(@PathVariable Long id) {
+        return repository.getOne(id);
     }
 
     @GetMapping("/randQuestion")
@@ -46,7 +56,10 @@ public class QuestionController {
     public Question replaceQuestion(@RequestBody Question newQuestion, @PathVariable Long id) {
         return repository.findById(id).map(question -> {
             question.setId(newQuestion.getId());
-            question.setAnswers(newQuestion.getAnswers());
+            question.setrAnswer(newQuestion.getrAnswer());
+            question.setwAnswer1(newQuestion.getwAnswer1());
+            question.setwAnswer2(newQuestion.getwAnswer2());
+            question.setwAnswer3(newQuestion.getwAnswer3());
             question.setQuestion(newQuestion.getQuestion());
             return repository.save(question);
         }).orElseGet(() -> {
@@ -57,7 +70,7 @@ public class QuestionController {
 
 
     @DeleteMapping("question/{id}")
-    public void deleteEmployee(@PathVariable Long id) {
+    public void deleteQuestion(@PathVariable Long id) {
         repository.deleteById(id);
     }
 }

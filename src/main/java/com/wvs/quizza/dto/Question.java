@@ -1,22 +1,36 @@
 package com.wvs.quizza.dto;
 
-import java.util.Arrays;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * @author Martin Beyer
  * DTO welches Fragentext und die Antwortmöglichkeiten speichert
  */
 
+@Entity(name = "tblQuestion")
 public class Question {
+    @Id
+    // @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String question;
-    private List<String> answers;
+    private String rAnswer;
+    private String wAnswer1;
+    private String wAnswer2;
+    private String wAnswer3;
+
+    public Question() {
+    }
+
+    ;
 
     public Question(Long id, String question, String rAnswer, String wAnswer1, String wAnswer2, String wAnswer3) {
         this.id = id;
         this.question = question;
-        this.answers = Arrays.asList(rAnswer, wAnswer1, wAnswer2, wAnswer3); // Richtige Antwort wird immer an 1. Stelle des Arrays gespeichert
+        this.rAnswer = rAnswer;
+        this.wAnswer1 = wAnswer1;
+        this.wAnswer2 = wAnswer2;
+        this.wAnswer3 = wAnswer3;
     }
 
     public Long getId() {
@@ -35,19 +49,35 @@ public class Question {
         this.question = question;
     }
 
-    public String getRightAnswer() {
-        return answers.get(0);
+    public String getrAnswer() {
+        return rAnswer;
     }
 
-    public List<String> getAnswers() {
-        return answers;
+    public void setrAnswer(String answer) {
+        this.rAnswer = answer;
     }
 
-    public void setAnswers(List<String> answers) {
-        this.answers = answers;
+    public String getwAnswer1() {
+        return wAnswer1;
     }
 
-    public List<String> getWrongAnswers() {
-        return answers.subList(1, 3);
+    public void setwAnswer1(String wAnswer1) {
+        this.wAnswer1 = wAnswer1;
+    }
+
+    public String getwAnswer2() {
+        return wAnswer2;
+    }
+
+    public void setwAnswer2(String wAnswer2) {
+        this.wAnswer2 = wAnswer2;
+    }
+
+    public String getwAnswer3() {
+        return wAnswer3;
+    }
+
+    public void setwAnswer3(String wAnswer3) {
+        this.wAnswer3 = wAnswer3;
     }
 }
