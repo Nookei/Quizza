@@ -1,4 +1,4 @@
-package com.wvs.quizza.Exceptions;
+package com.wvs.quizza.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

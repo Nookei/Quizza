@@ -1,4 +1,4 @@
-package com.wvs.quizza.Assembler;
+package com.wvs.quizza.assembler;
 
 import com.wvs.quizza.dto.Question;
 import org.springframework.hateoas.Resource;

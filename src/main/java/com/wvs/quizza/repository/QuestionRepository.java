@@ -1,4 +1,4 @@
-package com.wvs.quizza.Repository;
+package com.wvs.quizza.repository;
 
 import com.wvs.quizza.dto.Question;
 import org.springframework.data.jpa.repository.JpaRepository;

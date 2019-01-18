@@ -1,8 +1,8 @@
-package com.wvs.quizza.Controller;
+package com.wvs.quizza.controller;
 
-import com.wvs.quizza.Assembler.QuestionResourceAssembler;
-import com.wvs.quizza.Repository.QuestionRepository;
+import com.wvs.quizza.assembler.QuestionResourceAssembler;
 import com.wvs.quizza.dto.Question;
+import com.wvs.quizza.repository.QuestionRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

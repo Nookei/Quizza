@@ -1,4 +1,4 @@
-package com.wvs.quizza.Controller;
+package com.wvs.quizza.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
