@@ -2,6 +2,7 @@ package com.wvs.quizza.dto;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.List;
 
 /**
  * @author Martin Beyer
@@ -11,8 +12,8 @@ import javax.persistence.Id;
 @Entity(name = "tblQuestion")
 public class Question {
     @Id
-    // @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private List<Long> testMapping;
     private String question;
     private String rAnswer;
     private String wAnswer1;
@@ -22,10 +23,9 @@ public class Question {
     public Question() {
     }
 
-    ;
-
-    public Question(Long id, String question, String rAnswer, String wAnswer1, String wAnswer2, String wAnswer3) {
+    public Question(Long id, List<Long> testMapping, String question, String rAnswer, String wAnswer1, String wAnswer2, String wAnswer3) {
         this.id = id;
+        this.testMapping = testMapping;
         this.question = question;
         this.rAnswer = rAnswer;
         this.wAnswer1 = wAnswer1;
@@ -79,5 +79,19 @@ public class Question {
 
     public void setwAnswer3(String wAnswer3) {
         this.wAnswer3 = wAnswer3;
+    }
+
+    public boolean isInTest(Long testID) {
+        return this.testMapping.contains(testID);
+    }
+
+    public void removeFromTest(Long testID) {
+        testMapping.remove(testID);
+    }
+
+    public void addToTest(Long testID) {
+        if (!this.isInTest(testID)) {
+            testMapping.add(testID);
+        }
     }
 }

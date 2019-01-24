@@ -6,6 +6,8 @@ import com.wvs.quizza.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -21,13 +23,14 @@ public class QuestionController {
     public QuestionController(QuestionRepository repository, QuestionResourceAssembler assembler) {
         this.repository = repository;
         this.assembler = assembler;
+
+        repository.save(new Question(2L, Arrays.asList(1L, 2L), "foo2Frage", "answer", "falsch", "falscher", "am falschesten"));
+        repository.save(new Question(3L, Arrays.asList(2L), "fooFrage", "answer", "falsch", "falscher", "am falschesten"));
+        repository.save(new Question(4L, Arrays.asList(1L), "foo3Frage", "answer", "falsch", "falscher", "am falschesten"));
     }
 
     @GetMapping("/question")
     public List<Question> getAllQuestion() {
-        repository.save(new Question(2L, "foo2Frage", "answer", "falsch", "falscher", "am falschesten"));
-
-        repository.save(new Question(3L, "fooFrage", "answer", "falsch", "falscher", "am falschesten"));
         return repository.findAll();
     }
 
@@ -38,13 +41,27 @@ public class QuestionController {
 
     @GetMapping("/randQuestion")
     public Question getRandQuestion() {
-        rand = ThreadLocalRandom.current().nextLong(0, 2); // Todo bound auf entries db setzen
+        rand = ThreadLocalRandom.current().nextLong(0, repository.count());
         return repository.getOne(rand);
     }
 
-    @GetMapping("/list/{listid}/question/{id}") // TODO: implement
-    public Question getQuestionFromList(@PathVariable Long listid, @PathVariable Long id) {
-        return repository.getOne(id);
+    @GetMapping("/list/{testid}/question")
+    public Question getRandQuestionFromTest(@PathVariable Long testId) {
+        Question q;  // TODO: Klären dass es keinen Test ohne Fragen geben darf
+        do {
+            q = this.getRandQuestion();
+        } while (q.isInTest(testId));
+        return q;
+    }
+
+    @GetMapping("/list/{testid}")
+    public List<Question> getAllQuestionsFromList(@PathVariable Long testId) {
+        List<Question> back = Collections.emptyList();
+        for (Question q : repository.findAll()) {
+            if (q.isInTest(testId))
+                back.add(q);
+        }
+        return back;
     }
 
     @PostMapping("/question")
@@ -68,6 +85,15 @@ public class QuestionController {
         });
     }
 
+    @GetMapping("/question/{id}/removeFromTest/{testId}")
+    public void removeQuestionFromTest(@PathVariable Long id, @PathVariable Long testId) {
+        repository.getOne(id).removeFromTest(testId);
+    }
+
+    @GetMapping("/question/{id}/addToTest/{testId}")
+    public void addQuestionToTest(@PathVariable Long id, @PathVariable Long testId) {
+        repository.getOne(id).addToTest(testId);
+    }
 
     @DeleteMapping("question/{id}")
     public void deleteQuestion(@PathVariable Long id) {

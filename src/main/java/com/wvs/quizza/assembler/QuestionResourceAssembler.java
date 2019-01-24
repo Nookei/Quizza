@@ -14,8 +14,6 @@ public class QuestionResourceAssembler implements ResourceAssembler<Question, Re
 
     @Override
     public Resource<Question> toResource(Question question) {
-
-        //TODO: Verlinkung auf Lehrer erstellten Test
         return new Resource<>(question);
     }
 }
