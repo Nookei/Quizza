@@ -1,24 +1,20 @@
 package com.wvs.quizza.dto;
 
 
-import org.hibernate.annotations.ColumnTransformer;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * @author Martin Beyer
  * DTO zum Speichern von Information über User
  */
-@Entity(name = "tblUser")
+@Entity()
+@Table(name = "tbl_User")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String username;
-    @ColumnTransformer(read = "gp_sym_decrypt(passwort, ‘mySecretKey’)", write = "pgp_sym_encrypt(?, ‘mySecretKey’)")
+    //@ColumnTransformer(read = "gp_sym_decrypt(passwort, ‘mySecretKey’)", write = "pgp_sym_encrypt(?, ‘mySecretKey’)")
     //TODO: secret erstellem
     private String passwort;
     private boolean isAdmin;

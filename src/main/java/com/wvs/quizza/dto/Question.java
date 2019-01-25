@@ -1,19 +1,22 @@
 package com.wvs.quizza.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.List;
+import javax.persistence.Table;
 
 /**
  * @author Martin Beyer
  * DTO welches Fragentext und die Antwortmöglichkeiten speichert
  */
 
-@Entity(name = "tblQuestion")
+@Entity()
+@Table(name = "tbl_Question")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Question {
     @Id
     private Long id;
-    private List<Long> testMapping;
     private String question;
     private String rAnswer;
     private String wAnswer1;
@@ -23,9 +26,8 @@ public class Question {
     public Question() {
     }
 
-    public Question(Long id, List<Long> testMapping, String question, String rAnswer, String wAnswer1, String wAnswer2, String wAnswer3) {
+    public Question(Long id, String question, String rAnswer, String wAnswer1, String wAnswer2, String wAnswer3) {
         this.id = id;
-        this.testMapping = testMapping;
         this.question = question;
         this.rAnswer = rAnswer;
         this.wAnswer1 = wAnswer1;
@@ -81,17 +83,4 @@ public class Question {
         this.wAnswer3 = wAnswer3;
     }
 
-    public boolean isInTest(Long testID) {
-        return this.testMapping.contains(testID);
-    }
-
-    public void removeFromTest(Long testID) {
-        testMapping.remove(testID);
-    }
-
-    public void addToTest(Long testID) {
-        if (!this.isInTest(testID)) {
-            testMapping.add(testID);
-        }
-    }
 }
