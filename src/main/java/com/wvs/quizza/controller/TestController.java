@@ -7,7 +7,7 @@ import com.wvs.quizza.repository.TestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -15,16 +15,17 @@ import java.util.concurrent.ThreadLocalRandom;
 public class TestController {
 
     @Autowired
-    private
-    TestRepository repo;
+    private TestRepository repo;
 
     @Autowired
-    private
-    QuestionRepository questionRepository;
+    private QuestionRepository questionRepository;
 
     public TestController(TestRepository repo, QuestionRepository questionRepository) {
         this.repo = repo;
         this.questionRepository = questionRepository;
+
+        //        repo.save(new Test(0L, Arrays.asList(0L,1L),"erster Test"))
+        //      repo.save(new Test(1L, Arrays.asList(1L,2L),"zweiter Test"));
     }
 
     @GetMapping("/test/{testId}")
@@ -33,13 +34,19 @@ public class TestController {
     }
 
     @GetMapping("/test/{testId}/randQuestion")
-    public Test getRandQuestionFromTest(@PathVariable Long testId) {
-        return repo.getOne(ThreadLocalRandom.current().nextLong(0, repo.count()));
+    public Question getRandQuestionFromTest(@PathVariable Long testId) {
+        List<Long> allQuestions = repo.getOne(testId).getFragen();
+        return questionRepository.getOne(allQuestions.get(ThreadLocalRandom.current().nextInt(0, allQuestions.size())));
     }
 
-    @GetMapping("/test/{testId}/question") // oder nur Referenzen zurückgeben?
+    @GetMapping("/test")
+    public List<Test> getAllTests() {
+        return repo.findAll();
+    }
+
+    @GetMapping("/test/{testId}/question")
     public List<Question> getAllQuestionsFromTest(@PathVariable Long testId) {
-        List<Question> back = Collections.emptyList();
+        List<Question> back = new ArrayList<>();
         Test t = repo.getOne(testId);
 
         for (Long id : t.getFragen()) {
@@ -62,4 +69,10 @@ public class TestController {
             return repo.save(newTest);
         });
     }
+
+    @PostMapping("/test")
+    public Test createTest(@RequestBody Test test) {
+        return repo.save(test);
+    }
+
 }

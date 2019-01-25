@@ -1,5 +1,7 @@
 package com.wvs.quizza.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,6 +14,7 @@ import java.util.List;
  */
 @Entity()
 @Table(name = "tbl_Test")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Test {
     @Id
     private Long id;
