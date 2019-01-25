@@ -75,4 +75,9 @@ public class TestController {
         return repo.save(test);
     }
 
+    @DeleteMapping("/test/{testId}")
+    public void deleteTest(@PathVariable Long testId) {
+        repo.deleteById(testId);
+    }
+
 }

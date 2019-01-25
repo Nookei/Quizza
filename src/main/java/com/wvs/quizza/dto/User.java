@@ -1,6 +1,8 @@
 package com.wvs.quizza.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 /**
@@ -9,13 +11,14 @@ import javax.persistence.*;
  */
 @Entity()
 @Table(name = "tbl_User")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String username;
-    //@ColumnTransformer(read = "gp_sym_decrypt(passwort, ‘mySecretKey’)", write = "pgp_sym_encrypt(?, ‘mySecretKey’)")
     //TODO: secret erstellem
+    //@ColumnTransformer(read = "gp_sym_decrypt(passwort, ‘mySecretKey’)", write = "pgp_sym_encrypt(?, ‘mySecretKey’)")
     private String passwort;
     private boolean isAdmin;
 
