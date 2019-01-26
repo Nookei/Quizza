@@ -1,17 +1,21 @@
 package com.wvs.quizza.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * @author Martin Beyer
  * DTO welches Fragentext und die Antwortmöglichkeiten speichert
  */
 
-@Entity(name = "tblQuestion")
+@Entity()
+@Table(name = "tbl_Question")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Question {
     @Id
-    // @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String question;
     private String rAnswer;
@@ -21,8 +25,6 @@ public class Question {
 
     public Question() {
     }
-
-    ;
 
     public Question(Long id, String question, String rAnswer, String wAnswer1, String wAnswer2, String wAnswer3) {
         this.id = id;
@@ -80,4 +82,5 @@ public class Question {
     public void setwAnswer3(String wAnswer3) {
         this.wAnswer3 = wAnswer3;
     }
+
 }

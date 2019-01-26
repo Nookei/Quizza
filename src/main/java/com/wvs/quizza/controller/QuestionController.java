@@ -16,18 +16,17 @@ public class QuestionController {
     private final QuestionRepository repository;
     private final QuestionResourceAssembler assembler;
 
-    private Long rand;
-
     public QuestionController(QuestionRepository repository, QuestionResourceAssembler assembler) {
         this.repository = repository;
         this.assembler = assembler;
+
+        // repository.save(new Question(2L, "foo2Frage", "answer", "falsch", "falscher", "am falschesten"));
+        // repository.save(new Question(3L, "fooFrage", "answer", "falsch", "falscher", "am falschesten"));
+        // repository.save(new Question(4L, "foo3Frage", "answer", "falsch", "falscher", "am falschesten"));
     }
 
     @GetMapping("/question")
     public List<Question> getAllQuestion() {
-        repository.save(new Question(2L, "foo2Frage", "answer", "falsch", "falscher", "am falschesten"));
-
-        repository.save(new Question(3L, "fooFrage", "answer", "falsch", "falscher", "am falschesten"));
         return repository.findAll();
     }
 
@@ -38,13 +37,8 @@ public class QuestionController {
 
     @GetMapping("/randQuestion")
     public Question getRandQuestion() {
-        rand = ThreadLocalRandom.current().nextLong(0, 2); // Todo bound auf entries db setzen
+        Long rand = ThreadLocalRandom.current().nextLong(0, repository.count());
         return repository.getOne(rand);
-    }
-
-    @GetMapping("/list/{listid}/question/{id}") // TODO: implement
-    public Question getQuestionFromList(@PathVariable Long listid, @PathVariable Long id) {
-        return repository.getOne(id);
     }
 
     @PostMapping("/question")
@@ -67,7 +61,6 @@ public class QuestionController {
             return repository.save(newQuestion);
         });
     }
-
 
     @DeleteMapping("question/{id}")
     public void deleteQuestion(@PathVariable Long id) {
