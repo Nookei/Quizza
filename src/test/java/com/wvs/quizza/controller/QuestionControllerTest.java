@@ -11,7 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +22,9 @@ public class QuestionControllerTest {
     @InjectMocks
     QuestionController underTest;
 
-    @Autowired
     @Mock
     QuestionRepository questionRepository;
 
-    @Autowired
     @Mock
     QuestionResourceAssembler questionResourceAssembler;
 
@@ -57,25 +54,31 @@ public class QuestionControllerTest {
         Assert.assertEquals(question.getQuestion(), "foo?");
     }
 
-    @Test
-    public void getQuestionFromList() {
-    }
 
     @Test
     public void newQuestion() {
         //arrange
-        Question dirty = new Question(42L, "foobar?", "foobar", "barfoo", "barfoo", "barfoo");
+        Question dirty = new Question(1L, "foobar?", "foobar", "barfoo", "barfoo", "barfoo");
         //act
         underTest.newQuestion(dirty);
         //assert
 
-        Question back = underTest.getQuestion(42L);
+        Question back = underTest.getQuestion(1L);
 
         Assert.assertNotNull(back);
     }
 
     @Test
     public void replaceQuestion() {
+        //Arrange
+        Question question = new Question(1L, "foo?", "bar", "a", "b", "c");
+        //Act
+        Question modified = question;
+        modified.setQuestion("oof?");
+        Question back = underTest.replaceQuestion(modified, 1L);
+        //Assert
+        Assert.assertNotEquals(question.getQuestion(), back.getQuestion());
+
     }
 
     @Test

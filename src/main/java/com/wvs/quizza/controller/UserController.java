@@ -16,6 +16,13 @@ public class UserController {
 
     public UserController(UserRepository repo) {
         this.repo = repo;
+
+        repo.save(new User("foo", "bar", "admin"));
+        repo.save(new User("bar", "foo", "user"));
+    }
+
+    @GetMapping("/auth")
+    public void authUser() {
     }
 
     @PostMapping("/user")

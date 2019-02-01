@@ -20,9 +20,6 @@ public class QuestionController {
         this.repository = repository;
         this.assembler = assembler;
 
-        // repository.save(new Question(2L, "foo2Frage", "answer", "falsch", "falscher", "am falschesten"));
-        // repository.save(new Question(3L, "fooFrage", "answer", "falsch", "falscher", "am falschesten"));
-        // repository.save(new Question(4L, "foo3Frage", "answer", "falsch", "falscher", "am falschesten"));
     }
 
     @GetMapping("/question")
