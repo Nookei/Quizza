@@ -4,6 +4,8 @@ import com.wvs.quizza.dto.User;
 import com.wvs.quizza.exceptions.UsernameNotUniqueException;
 import com.wvs.quizza.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +27,7 @@ public class UserController {
     public void authUser() {
     }
 
+    @PreAuthorize("true")
     @PostMapping("/user")
     public User createUser(@RequestBody User user) {
         if (isUsernameUnique(user.getUsername())) {
@@ -33,9 +36,14 @@ public class UserController {
             throw new UsernameNotUniqueException();
     }
 
-    @GetMapping("/user/{userId}")
-    public User getUserById(@PathVariable Long userId) {
-        return repo.getOne(userId);
+    @GetMapping("/user/{username}")
+    public User getUserByUsername(@PathVariable String username) {
+        for (User user:repo.findAll()) {
+            if (user.getUsername().equals(username)){
+                return user;
+            }
+        }
+        throw new UsernameNotFoundException(username + " not found");
     }
 
     @GetMapping("/user")
