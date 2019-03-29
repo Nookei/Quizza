@@ -13,8 +13,7 @@ import org.springframework.stereotype.Component;
 public class DetailsService implements UserDetailsService {
 
     @Autowired
-    private
-    UserRepository users;
+    private UserRepository users;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

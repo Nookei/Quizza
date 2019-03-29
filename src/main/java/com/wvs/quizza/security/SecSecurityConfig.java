@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    DetailsService detailsService;
+    private DetailsService detailsService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
