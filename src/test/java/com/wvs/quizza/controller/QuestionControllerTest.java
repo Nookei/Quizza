@@ -68,23 +68,6 @@ public class QuestionControllerTest {
         Assert.assertNotNull(back);
     }
 
-    @Test
-    public void replaceQuestion() {
-        //Arrange
-        Question question = new Question(1L, "foo?", "bar", "a", "b", "c");
-        //Act
-        Question modified = question;
-        modified.setQuestion("oof?");
-        Question back = underTest.replaceQuestion(modified, 1L);
-        //Assert
-        Assert.assertNotEquals(question.getQuestion(), back.getQuestion());
-
-    }
-
-    @Test
-    public void deleteQuestion() {
-    }
-
     public List<Question> createTestData() {
         List<Question> back = new ArrayList<>();
         back.add(new Question(1L, "foo?", "bar", "a", "b", "c"));

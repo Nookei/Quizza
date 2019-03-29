@@ -29,7 +29,7 @@ public class User {
     public User(Long id, String username, String passwort, int isAdmin) {
         this.id = id;
         this.username = username;
-        this.passwort = passwort;
+        encryptPasswort(passwort);
         this.isAdmin = isAdmin;
     }
 

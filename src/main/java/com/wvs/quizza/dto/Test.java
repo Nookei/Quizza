@@ -2,10 +2,7 @@ package com.wvs.quizza.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -17,6 +14,7 @@ import java.util.List;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Test {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @ElementCollection
     private List<Long> fragen;
