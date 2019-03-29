@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 @RestController
@@ -19,9 +20,6 @@ public class QuestionController {
     public QuestionController(QuestionRepository repository, QuestionResourceAssembler assembler) {
         this.repository = repository;
         this.assembler = assembler;
-
-        repository.save(new Question("Frage","antwort","a2","a3","a4"));
-        repository.save(new Question("Frage2","antwor2t","a2","a3","a4"));
     }
 
     @GetMapping("/question")
@@ -34,10 +32,18 @@ public class QuestionController {
         return repository.getOne(id);
     }
 
+    /**
+     * gets used every time a normal question gets presented
+     *
+     * @return random Question from DB
+     */
     @GetMapping("/randQuestion")
     public Question getRandQuestion() {
-        Long rand = ThreadLocalRandom.current().nextLong(0, repository.count());
-        return repository.getOne(rand);
+        Optional<Question> question;
+        do {
+            question = repository.findById(ThreadLocalRandom.current().nextLong(1, repository.count()));
+        } while (!question.isPresent());
+        return question.get();
     }
 
     @PostMapping("/question")

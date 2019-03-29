@@ -1,13 +1,11 @@
 package com.wvs.quizza.dto;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 /**
  * @author Martin Beyer
@@ -22,23 +20,33 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String username;
-    @JsonIgnore
     private String passwort;
-    @JsonIgnore
-    private String[] roles;
+    private int isAdmin;
 
     public User() {
     }
 
-    public User(String username, String passwort, String roles) {
+    public User(Long id, String username, String passwort, int isAdmin) {
+        this.id = id;
         this.username = username;
-        setPasswort(passwort);
-        this.roles = new String[1];
-        this.roles[0] = roles;
+        this.passwort = passwort;
+        this.isAdmin = isAdmin;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUsername() {
         return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPasswort() {
@@ -46,18 +54,19 @@ public class User {
     }
 
     public void setPasswort(String passwort) {
-        this.passwort = PASSWORD_ENCODER.encode(passwort);
+        encryptPasswort(passwort);
     }
 
     public boolean isAdmin() {
-        return Objects.equals(roles[0], "admin");
+        return isAdmin == 1;
     }
 
-    public String[] getRoles() {
-        return roles;
+    public void setIsAdmin(int isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
-    public void setRoles(String[] roles) {
-        this.roles = roles;
+    private void encryptPasswort(String unencrypted) {
+        passwort = PASSWORD_ENCODER.encode(unencrypted);
     }
+
 }

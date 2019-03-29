@@ -32,4 +32,3 @@ public class DetailsService implements UserDetailsService {
         return user.isAdmin() ? "admin" : "user";
     }
 }
-

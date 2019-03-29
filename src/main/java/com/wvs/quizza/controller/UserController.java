@@ -4,7 +4,6 @@ import com.wvs.quizza.dto.User;
 import com.wvs.quizza.exceptions.UsernameNotUniqueException;
 import com.wvs.quizza.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,16 +17,12 @@ public class UserController {
 
     public UserController(UserRepository repo) {
         this.repo = repo;
-
-        repo.save(new User("foo", "bar", "admin"));
-        repo.save(new User("bar", "foo", "user"));
     }
 
     @GetMapping("/auth")
     public void authUser() {
     }
 
-    @PreAuthorize("true")
     @PostMapping("/user")
     public User createUser(@RequestBody User user) {
         if (isUsernameUnique(user.getUsername())) {
@@ -53,7 +48,6 @@ public class UserController {
 
     @DeleteMapping("/user/{userId}")
     public void delete(@PathVariable Long userId) {
-        //TODO: Wie bekommt man den Current User
         repo.deleteById(userId);
     }
 
@@ -65,6 +59,5 @@ public class UserController {
         }
         return true;
     }
-
 
 }

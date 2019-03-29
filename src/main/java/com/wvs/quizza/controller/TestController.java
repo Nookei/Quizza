@@ -23,9 +23,6 @@ public class TestController {
     public TestController(TestRepository repo, QuestionRepository questionRepository) {
         this.repo = repo;
         this.questionRepository = questionRepository;
-
-        //        repo.save(new Test(0L, Arrays.asList(0L,1L),"erster Test"))
-        //      repo.save(new Test(1L, Arrays.asList(1L,2L),"zweiter Test"));
     }
 
     @GetMapping("/test/{testId}")
@@ -36,6 +33,7 @@ public class TestController {
     @GetMapping("/test/{testId}/randQuestion")
     public Question getRandQuestionFromTest(@PathVariable Long testId) {
         List<Long> allQuestions = repo.getOne(testId).getFragen();
+
         return questionRepository.getOne(allQuestions.get(ThreadLocalRandom.current().nextInt(0, allQuestions.size())));
     }
 
