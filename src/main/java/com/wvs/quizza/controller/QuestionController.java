@@ -20,6 +20,8 @@ public class QuestionController {
         this.repository = repository;
         this.assembler = assembler;
 
+        repository.save(new Question("Frage","antwort","a2","a3","a4"));
+        repository.save(new Question("Frage2","antwor2t","a2","a3","a4"));
     }
 
     @GetMapping("/question")
@@ -46,7 +48,6 @@ public class QuestionController {
     @PutMapping("/question/{id}")
     public Question replaceQuestion(@RequestBody Question newQuestion, @PathVariable Long id) {
         return repository.findById(id).map(question -> {
-            question.setId(newQuestion.getId());
             question.setrAnswer(newQuestion.getrAnswer());
             question.setwAnswer1(newQuestion.getwAnswer1());
             question.setwAnswer2(newQuestion.getwAnswer2());

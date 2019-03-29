@@ -2,9 +2,7 @@ package com.wvs.quizza.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @author Martin Beyer
@@ -16,6 +14,7 @@ import javax.persistence.Table;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Question {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String question;
     private String rAnswer;
@@ -28,6 +27,14 @@ public class Question {
 
     public Question(Long id, String question, String rAnswer, String wAnswer1, String wAnswer2, String wAnswer3) {
         this.id = id;
+        this.question = question;
+        this.rAnswer = rAnswer;
+        this.wAnswer1 = wAnswer1;
+        this.wAnswer2 = wAnswer2;
+        this.wAnswer3 = wAnswer3;
+    }
+
+    public Question(String question, String rAnswer, String wAnswer1, String wAnswer2, String wAnswer3) {
         this.question = question;
         this.rAnswer = rAnswer;
         this.wAnswer1 = wAnswer1;
