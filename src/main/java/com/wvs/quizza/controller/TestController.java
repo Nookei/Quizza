@@ -56,7 +56,6 @@ public class TestController {
     @PutMapping("/test/{testId}")
     public Test replaceTest(@RequestBody Test newTest, @PathVariable Long testId) {
         return repo.findById(testId).map(test -> {
-            test.setId(newTest.getId());
             test.setFragen(newTest.getFragen());
             test.setName(newTest.getName());
 
