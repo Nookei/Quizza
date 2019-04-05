@@ -23,7 +23,7 @@ public class DetailsService implements UserDetailsService {
         }
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
-                user.getPasswort(),
+                user.getPassword(),
                 AuthorityUtils.createAuthorityList(createAL(user))
         );
     }

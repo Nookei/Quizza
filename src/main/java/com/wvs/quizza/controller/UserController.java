@@ -16,6 +16,8 @@ public class UserController {
     private UserRepository repo;
 
     public UserController(UserRepository repo) {
+        /*repo.save(new User(1L,"foo","bar",0));
+        repo.save(new User(2L,"bar","foo",0));*/
         this.repo = repo;
     }
 

@@ -20,13 +20,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String username;
-    private String passwort;
-    private int isAdmin;
+    private String password;
+    private Integer isAdmin;
 
     public User() {
     }
 
-    public User(Long id, String username, String passwort, int isAdmin) {
+    public User(Long id, String username, String passwort, Integer isAdmin) {
         this.id = id;
         this.username = username;
         encryptPasswort(passwort);
@@ -49,24 +49,28 @@ public class User {
         this.username = username;
     }
 
-    public String getPasswort() {
-        return passwort;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswort(String passwort) {
-        encryptPasswort(passwort);
+    public void setPassword(String password) {
+        encryptPasswort(password);
     }
 
     public boolean isAdmin() {
         return isAdmin == 1;
     }
 
-    public void setIsAdmin(int isAdmin) {
+    public Integer getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(Integer isAdmin) {
         this.isAdmin = isAdmin;
     }
 
     private void encryptPasswort(String unencrypted) {
-        passwort = PASSWORD_ENCODER.encode(unencrypted);
+        password = PASSWORD_ENCODER.encode(unencrypted);
     }
 
 }

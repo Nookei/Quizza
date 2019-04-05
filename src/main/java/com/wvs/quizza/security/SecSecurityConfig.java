@@ -34,10 +34,4 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests();
 
     }
-
-  /*  @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers( "/user");
-    }*/
-
 }
