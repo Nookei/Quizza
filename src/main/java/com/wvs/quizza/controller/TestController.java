@@ -34,7 +34,9 @@ public class TestController {
     public Question getRandQuestionFromTest(@PathVariable Long testId) {
         List<Long> allQuestions = repo.getOne(testId).getFragen();
 
-        return questionRepository.getOne(allQuestions.get(ThreadLocalRandom.current().nextInt(0, allQuestions.size())));
+        return questionRepository.getOne(
+                allQuestions.get(
+                        ThreadLocalRandom.current().nextInt(0, allQuestions.size())));
     }
 
     @GetMapping("/test")

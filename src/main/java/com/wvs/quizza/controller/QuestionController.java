@@ -17,7 +17,6 @@ public class QuestionController {
     private final QuestionResourceAssembler assembler;
 
     public QuestionController(QuestionRepository repository, QuestionResourceAssembler assembler) {
-        repository.save(new Question("hallo","asd","sad","asd","sad"));
         this.repository = repository;
         this.assembler = assembler;
     }

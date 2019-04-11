@@ -18,6 +18,7 @@ public class Test {
     private Long id;
     @ElementCollection
     private List<Long> fragen;
+    private int anzFragen;
     private String name;
 
     public Test() {
@@ -61,5 +62,13 @@ public class Test {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getAnzFragen() {
+        return fragen.size();
+    }
+
+    public void setAnzFragen(int anzFragen) {
+        this.anzFragen = anzFragen;
     }
 }

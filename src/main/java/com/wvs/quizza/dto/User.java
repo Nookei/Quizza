@@ -72,5 +72,4 @@ public class User {
     private void encryptPasswort(String unencrypted) {
         password = PASSWORD_ENCODER.encode(unencrypted);
     }
-
 }
