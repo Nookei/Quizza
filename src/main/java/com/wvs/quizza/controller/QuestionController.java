@@ -66,4 +66,9 @@ public class QuestionController {
     public void deleteQuestion(@PathVariable Long id) {
         repository.deleteById(id);
     }
+
+    @GetMapping("countQuestions")
+    public Long countQuestions() {
+        return repository.count();
+    }
 }
