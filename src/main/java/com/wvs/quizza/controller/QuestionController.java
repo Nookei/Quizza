@@ -1,6 +1,5 @@
 package com.wvs.quizza.controller;
 
-import com.wvs.quizza.assembler.QuestionResourceAssembler;
 import com.wvs.quizza.dto.Question;
 import com.wvs.quizza.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +13,9 @@ public class QuestionController {
 
     @Autowired
     private final QuestionRepository repository;
-    private final QuestionResourceAssembler assembler;
 
-    public QuestionController(QuestionRepository repository, QuestionResourceAssembler assembler) {
+    public QuestionController(QuestionRepository repository) {
         this.repository = repository;
-        this.assembler = assembler;
     }
 
     @GetMapping("/question")

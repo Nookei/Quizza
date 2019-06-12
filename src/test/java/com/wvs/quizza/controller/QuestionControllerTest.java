@@ -1,6 +1,5 @@
 package com.wvs.quizza.controller;
 
-import com.wvs.quizza.assembler.QuestionResourceAssembler;
 import com.wvs.quizza.dto.Question;
 import com.wvs.quizza.repository.QuestionRepository;
 import org.junit.Assert;
@@ -11,9 +10,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * @author Martin Beyer
+ * Unit-Test für QuestionController
+ */
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -22,11 +27,10 @@ public class QuestionControllerTest {
     @InjectMocks
     QuestionController underTest;
 
+    @Autowired
     @Mock
     QuestionRepository questionRepository;
 
-    @Mock
-    QuestionResourceAssembler questionResourceAssembler;
 
     @Before
     public void setUp() {
@@ -63,7 +67,7 @@ public class QuestionControllerTest {
         underTest.newQuestion(dirty);
         //assert
 
-        Question back = underTest.getQuestion(1L);
+        Question back = underTest.getQuestion(42L);
 
         Assert.assertNotNull(back);
     }
